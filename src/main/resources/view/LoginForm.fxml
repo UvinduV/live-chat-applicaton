@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="loginPanel" prefHeight="550.0" prefWidth="500.0" style="-fx-background-color: #7593ae;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller.LoginFormController">
+   <children>
+      <Label layoutX="185.0" layoutY="485.0" text="Play Tech (PVT) LTD" textFill="WHITE" />
+      <TextField fx:id="txtUsername" layoutX="122.0" layoutY="300.0" prefHeight="33.0" prefWidth="257.0" promptText="Enter Username" style="-fx-background-radius: 40;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TextField>
+      <Label layoutX="172.0" layoutY="65.0" text="Login Here" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="30.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="208.0" layoutY="362.0" onAction="#btnLoginOnAction" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: #274983;" text="Login" textFill="#f8f4f4">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="106.0" fitWidth="131.0" layoutX="197.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/userN.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
