@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="ServerPanel" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller.ServerFormController">
+   <children>
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="405.0" layoutY="24.0" onAction="#addButtonOnAction" prefHeight="34.0" prefWidth="18.0" style="-fx-background-color: #000000;" text="Button">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Music/new_chat_clone/src/main/resources/img/add-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <ScrollPane fx:id="scrollPain" layoutX="28.0" layoutY="76.0" prefHeight="406.0" prefWidth="428.0">
+         <content>
+            <VBox fx:id="vBox" prefHeight="403.0" prefWidth="436.0" style="-fx-background-color: #d9e3f0;" />
+         </content>
+      </ScrollPane>
+      <Text fill="#282828" layoutX="213.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server">
+         <font>
+            <Font name="Bell MT Bold" size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

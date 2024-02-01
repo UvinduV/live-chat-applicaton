@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ClientPanel" prefHeight="550.0" prefWidth="500.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller.ClientFormController">
+   <children>
+      <ScrollPane fx:id="scrollPain" layoutX="10.0" layoutY="66.0" prefHeight="412.0" prefWidth="520.0">
+         <content>
+            <VBox fx:id="vBox" prefHeight="406.0" prefWidth="513.0" />
+         </content>
+      </ScrollPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="68.0" layoutY="486.0" stroke="BLACK" strokeType="INSIDE" width="539.0" />
+      <JFXButton fx:id="btnSend" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="472.0" layoutY="497.0" onAction="#btnSendOnAction" prefHeight="26.0" prefWidth="29.0">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/sendB.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#377fc3" height="56.0" stroke="BLACK" strokeType="INSIDE" width="539.0" />
+      <Text fx:id="txtLabel" fill="WHITE" layoutX="102.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Text>
+      <JFXButton fx:id="emojiButton" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="417.0" layoutY="499.0" onAction="#btnEmojiOnAction" prefHeight="34.0" prefWidth="37.0" style="-fx-background-radius: 40;">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/imogiW.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btnAttached" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="499.0" onAction="#btnAttachedOnAction" prefHeight="34.0" prefWidth="29.0" text="Button">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/attached.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <TextField fx:id="txtMsg" layoutX="63.0" layoutY="499.0" onAction="#txtMsgOnAction" prefHeight="34.0" prefWidth="354.0" style="-fx-background-radius: 40;" />
+      <ImageView fitHeight="39.0" fitWidth="49.0" layoutX="39.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/userDP.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
