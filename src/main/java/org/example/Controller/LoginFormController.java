@@ -49,7 +49,7 @@ public class LoginFormController {
             primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ClientForm.fxml"))));
 
             ClientFormController controller = new ClientFormController();
-            controller.setClientName(txtUsername.getText());
+            //controller.setClientName(txtUsername.getText());
             //user=txtUsername.getText();
             // Set the parameter
             //fxmlLoader.setController(controller);

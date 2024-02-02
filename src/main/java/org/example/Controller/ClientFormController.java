@@ -70,7 +70,7 @@ public class ClientFormController {
     }
     public void initialize(){
         System.out.println("client"+clientName);
-        txtLabel.setText(clientName);
+       // txtLabel.setText(clientName);
 
         new Thread(new Runnable() {
             @Override
@@ -113,35 +113,21 @@ public class ClientFormController {
     }
 
     public void btnAttachedOnAction(ActionEvent event) {
-
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image File");
-        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
-        fileChooser.getExtensionFilters().add(imageFilter);
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
-        if (selectedFile != null) {
-            try {
-                byte[] bytes = Files.readAllBytes(selectedFile.toPath());
-                HBox hBox = new HBox();
-                hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; -fx-alignment: center-right;");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif","*.bmp","*.jpeg")
+        );
+        Stage stage = (Stage) ClientPanel.getScene().getWindow();
 
-                // Display the image in an ImageView or any other UI component
-                ImageView imageView = new ImageView(new Image(new FileInputStream(selectedFile)));
-                imageView.setStyle("-fx-padding: 10px;");
-                imageView.setFitHeight(180);
-                imageView.setFitWidth(100);
+        File file = fileChooser.showOpenDialog(stage);
 
-                hBox.getChildren().addAll(imageView);
-                vBox.getChildren().add(hBox);
-
-                client.sendImage(bytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        if (file != null) {
+            String sendImage = file.toURI().toString();
+            sendImageToClient(sendImage);
         }
     }
 
-    public void setImage(byte[] bytes, String sender) {
+    /*public void setImage(byte[] bytes, String sender) {
         HBox hBox = new HBox();
         Label messageLbl = new Label(sender);
         //messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
@@ -158,6 +144,33 @@ public class ClientFormController {
             vBox.getChildren().add(hBox);
         });
 
+    }*/
+    private void sendImageToClient(String sendImage) {
+        HBox hBoxName = new HBox();
+        hBoxName.setAlignment(Pos.CENTER_RIGHT);
+        Text textName = new Text("Me");
+        TextFlow textFlowName = new TextFlow(textName);
+        hBoxName.getChildren().add(textFlowName);
+
+        Image image = new Image(sendImage);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(5,5,5,10));
+        hBox.getChildren().add(imageView);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+
+        vBox.getChildren().add(hBoxName);
+        vBox.getChildren().add(hBox);
+
+        try {
+            dataOutputStream.writeUTF(clientName + "-" + sendImage);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void txtMsgOnAction(ActionEvent event) {
@@ -269,6 +282,7 @@ public class ClientFormController {
     }
     public void setClientName(String name) {
         clientName = name;
+        txtLabel.setText(clientName);
     }
     public void writeMessage(String message) {
         HBox hBox = new HBox();

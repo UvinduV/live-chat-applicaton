@@ -45,7 +45,7 @@ public class Client implements Runnable, Serializable {
             try {
                 message = inputStream.readUTF();
                 if (message.equals("*image*")) {
-                    receiveImage();
+                   // receiveImage();
                 } else {
                     clientFormController.writeMessage(message);
                 }
@@ -100,14 +100,6 @@ public class Client implements Runnable, Serializable {
         return name;
     }
 
-    private void receiveImage() throws IOException {
-        String utf = inputStream.readUTF();
-        int size = inputStream.readInt();
-        byte[] bytes = new byte[size];
-        inputStream.readFully(bytes);
-        System.out.println(name + "- Image received: from " + utf);
-        clientFormController.setImage(bytes, utf);
-        // Handle the received image bytes as needed
-    }
+
 
 }
