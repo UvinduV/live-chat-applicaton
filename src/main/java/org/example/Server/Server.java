@@ -43,7 +43,7 @@ public class Server  {
     private List<ClientHandler> clients = new ArrayList<>();
 
     private Server() throws IOException {
-        serverSocket = new ServerSocket(3001);
+        serverSocket = new ServerSocket(3000);
         System.out.println("server started!");
     }
 

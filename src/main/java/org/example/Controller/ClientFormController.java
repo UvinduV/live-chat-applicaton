@@ -21,6 +21,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.Client.Client;
+import org.example.emoji.EmojiPicker;
 
 
 import java.awt.*;
@@ -55,22 +56,48 @@ public class ClientFormController {
     @FXML
     private VBox vBox;
 
-    private Client client;
+
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-    private String clientName ;
+    private String username =" ";
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
+    /*@Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        new Thread(()->{
+            try {
+                socket = new Socket("localhost", 3001);
+                dataInputStream = new DataInputStream(socket.getInputStream());
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                ServerFormController.receiveMessage(username + " Joined to the chat!");
+
+                while (socket.isConnected()) {
+                    String message = dataInputStream.readUTF();
+                    receiveMessage(message, ClientFormController.this.vBox);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
+        this.vBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                scrollPain.setVvalue((Double) t1);
+            }
+        });
     }
     public void initialize(){
-        System.out.println("client"+clientName);
-       // txtLabel.setText(clientName);
+        username=LoginFormController.user;
+        txtLabel.setText(username);
+    }*/
+    public void initialize(){
+        System.out.println("client"+username);
+        username=LoginFormController.user;
+        txtLabel.setText(username);
+        // txtLabel.setText(clientName);
 
         new Thread(new Runnable() {
             @Override
@@ -80,7 +107,7 @@ public class ClientFormController {
                     dataInputStream = new DataInputStream(socket.getInputStream());
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     System.out.println("Client connected");
-                    ServerFormController.receiveMessage(clientName+" joined.");
+                    ServerFormController.receiveMessage(username+" joined.");
 
                     while (socket.isConnected()){
                         String receivingMsg = dataInputStream.readUTF();
@@ -99,17 +126,40 @@ public class ClientFormController {
             }
         });
 
-        emoji();
     }
     public void shutdown() {
         // cleanup code here
-        ServerFormController.receiveMessage(clientName+" left.");
-    }
-    private void emoji() {
-
+        ServerFormController.receiveMessage(username+" left.");
     }
 
     public void btnEmojiOnAction(ActionEvent event) {
+        EmojiPicker emojiPicker = new EmojiPicker();
+
+        VBox vBox = new VBox(emojiPicker);
+        vBox.setPrefSize(150,300);
+        vBox.setLayoutX(30);
+        vBox.setLayoutY(380);
+        vBox.setStyle("-fx-font-size: 35");
+
+        ClientPanel.getChildren().add(vBox);
+
+        emojiPicker.setVisible(false);
+
+        emojiButton.setOnAction(mouseEvent ->{
+            if (emojiPicker.isVisible()) {
+                emojiPicker.setVisible(false);
+            } else {
+                emojiPicker.setVisible(true);
+            }
+        });
+
+        emojiPicker.getEmojiListView().setOnMouseClicked(mouseEvent -> {
+            String selectedEmoji = emojiPicker.getEmojiListView().getSelectionModel().getSelectedItem();
+            if (selectedEmoji != null) {
+                txtMsg.setText(txtMsg.getText()+selectedEmoji);
+            }
+            emojiPicker.setVisible(false);
+        });
     }
 
     public void btnAttachedOnAction(ActionEvent event) {
@@ -127,24 +177,7 @@ public class ClientFormController {
         }
     }
 
-    /*public void setImage(byte[] bytes, String sender) {
-        HBox hBox = new HBox();
-        Label messageLbl = new Label(sender);
-        //messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
 
-        hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; " + (sender.equals(client.getName()) ? "-fx-alignment: center-right;" : "-fx-alignment: center-left;"));
-        // Display the image in an ImageView or any other UI component
-        Platform.runLater(() -> {
-            ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(bytes)));
-            imageView.setStyle("-fx-padding: 10px;");
-            imageView.setFitHeight(180);
-            imageView.setFitWidth(100);
-
-          //  hBox.getChildren().addAll(messageLbl, imageView);
-            vBox.getChildren().add(hBox);
-        });
-
-    }*/
     private void sendImageToClient(String sendImage) {
         HBox hBoxName = new HBox();
         hBoxName.setAlignment(Pos.CENTER_RIGHT);
@@ -166,7 +199,7 @@ public class ClientFormController {
         vBox.getChildren().add(hBox);
 
         try {
-            dataOutputStream.writeUTF(clientName + "-" + sendImage);
+            dataOutputStream.writeUTF(username + "-" + sendImage);
             dataOutputStream.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -192,7 +225,7 @@ public class ClientFormController {
                 text.setStyle("-fx-font-size: 14");
                 TextFlow textFlow = new TextFlow(text);
 
-//              #0693e3 #37d67a #40bf75
+
                 textFlow.setStyle("-fx-background-color: #0693e3; -fx-font-weight: bold; -fx-color: white; -fx-background-radius: 20px");
                 textFlow.setPadding(new Insets(5, 10, 5, 10));
                 text.setFill(Color.color(1, 1, 1));
@@ -213,7 +246,7 @@ public class ClientFormController {
 
 
                 try {
-                    dataOutputStream.writeUTF(clientName + "-" + msgToSend);
+                    dataOutputStream.writeUTF(username + "-" + msgToSend);
                     dataOutputStream.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -281,15 +314,7 @@ public class ClientFormController {
         }
     }
     public void setClientName(String name) {
-        clientName = name;
-        txtLabel.setText(clientName);
-    }
-    public void writeMessage(String message) {
-        HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
-        Label messageLbl = new Label(message);
-       // messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
-        //hBox.getChildren().add(messageLbl);
-        Platform.runLater(() -> vBox.getChildren().add(hBox));
+        this.username = name;
+        txtLabel.setText(username);
     }
 }

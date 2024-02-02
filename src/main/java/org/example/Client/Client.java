@@ -47,7 +47,7 @@ public class Client implements Runnable, Serializable {
                 if (message.equals("*image*")) {
                    // receiveImage();
                 } else {
-                    clientFormController.writeMessage(message);
+                   // clientFormController.writeMessage(message);
                 }
 
             } catch (IOException e) {
@@ -77,7 +77,7 @@ public class Client implements Runnable, Serializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ClientChatForm.fxml"));
         Parent parent = loader.load();
         clientFormController = loader.getController();
-        clientFormController.setClient(this);
+        //clientFormController.setClient(this);
         stage.setResizable(false);
         stage.setScene(new Scene(parent));
         stage.setTitle(name + "'s Chat");
